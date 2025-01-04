@@ -1,5 +1,6 @@
 extends Node
 
+# A windows commit!
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,6 +13,3 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	pass
-	
-# This is a new comment
-# Checking remote
