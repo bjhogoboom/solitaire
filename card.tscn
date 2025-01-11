@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcx2fh3455htq"]
+[gd_scene load_steps=7 format=3 uid="uid://dcx2fh3455htq"]
 
 [ext_resource type="Shader" path="res://outline.gdshader" id="1_1n3m7"]
 [ext_resource type="Script" path="res://card.gd" id="1_ifc2y"]
 [ext_resource type="Texture2D" uid="uid://b8c7g840nn8lx" path="res://Sprites/Clover/card_1_clover.png" id="1_pxj3i"]
+[ext_resource type="Script" path="res://selectable.gd" id="3_c7koa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ckbct"]
 shader = ExtResource("1_1n3m7")
@@ -18,13 +19,16 @@ material = SubResource("ShaderMaterial_ckbct")
 texture = ExtResource("1_pxj3i")
 script = ExtResource("1_ifc2y")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="SelectableArea" type="Area2D" parent="."]
+script = ExtResource("3_c7koa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableArea"]
 shape = SubResource("RectangleShape2D_nvipy")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="SelectedIndicator" type="Polygon2D" parent="."]
 z_as_relative = false
 position = Vector2(-74, 15)
 color = Color(0.678141, 0.0957562, 0.203289, 1)
 polygon = PackedVector2Array(41, -59, 107, -59, 107, 29, 41, 29)
+
+[connection signal="input_event" from="SelectableArea" to="." method="on_card_input"]

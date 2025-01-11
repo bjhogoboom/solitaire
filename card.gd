@@ -1,16 +1,11 @@
-extends Node
+extends Sprite2D
 
-# A windows commit!
+@onready var selected_indicator: Polygon2D = $SelectedIndicator
 
-# Called when the node enters the scene tree for the first time.
-# Remote again?
-func _ready() -> void:
-	pass # Replace with function body.
+func on_card_input(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event.is_action_pressed("click"):
+		select_card()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-func _physics_process(delta: float) -> void:
-	pass
+func select_card() -> void:
+	print("Toggling visibility")
+	selected_indicator.visible = !selected_indicator.visible
