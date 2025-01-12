@@ -4,6 +4,9 @@
 
 [node name="Node" type="Node"]
 
-[node name="Sprite2D" parent="." instance=ExtResource("1_klhmh")]
+[node name="Card" parent="." instance=ExtResource("1_klhmh")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Card2" parent="." instance=ExtResource("1_klhmh")]
+position = Vector2(-199, -1)
