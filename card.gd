@@ -9,7 +9,7 @@ func _ready() -> void:
 		texture = stats.texture()
 		
 
-func on_card_input(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func on_card_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
 		select_card()
 
