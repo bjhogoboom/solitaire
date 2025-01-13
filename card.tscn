@@ -1,34 +1,57 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcx2fh3455htq"]
+[gd_scene load_steps=6 format=3 uid="uid://dcx2fh3455htq"]
 
-[ext_resource type="Shader" path="res://outline.gdshader" id="1_1n3m7"]
 [ext_resource type="Script" path="res://card.gd" id="1_ifc2y"]
 [ext_resource type="Texture2D" uid="uid://b8c7g840nn8lx" path="res://Sprites/Clover/card_1_clover.png" id="1_pxj3i"]
-[ext_resource type="Script" path="res://selectable.gd" id="3_c7koa"]
+
+[sub_resource type="Shader" id="Shader_abvbp"]
+code = "shader_type canvas_item;
+
+uniform vec4 line_color : source_color = vec4(1.0);
+uniform float line_thickness : hint_range(0, 10) = 1.0;
+
+const vec2 OFFSETS[8] = {
+	vec2(-1, -1), vec2(-1, 0), vec2(-1, 1), vec2(0, -1), vec2(0, 1), 
+	vec2(1, -1), vec2(1, 0), vec2(1, 1)
+};
+
+void fragment() {
+	vec2 size = TEXTURE_PIXEL_SIZE * line_thickness;
+	float outline = 0.0;
+	
+	for (int i = 0; i < OFFSETS.length(); i++) {
+		outline += texture(TEXTURE, UV + size * OFFSETS[i]).a;
+	}
+	outline = min(outline, 1.0);
+	
+	vec4 color = texture(TEXTURE, UV);
+	COLOR = mix(color, line_color, outline - color.a);
+}"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ckbct"]
-shader = ExtResource("1_1n3m7")
+shader = SubResource("Shader_abvbp")
 shader_parameter/line_color = Color(0.827046, 0.176083, 0.38582, 1)
 shader_parameter/line_thickness = 3.695
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nvipy"]
 size = Vector2(60, 82)
 
-[node name="Sprite2D" type="Sprite2D"]
+[node name="Card" type="Node2D" node_paths=PackedStringArray("selection_area")]
+script = ExtResource("1_ifc2y")
+selection_area = NodePath("SelectableArea")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 12
 material = SubResource("ShaderMaterial_ckbct")
 texture = ExtResource("1_pxj3i")
-script = ExtResource("1_ifc2y")
 
 [node name="SelectableArea" type="Area2D" parent="."]
-script = ExtResource("3_c7koa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableArea"]
 shape = SubResource("RectangleShape2D_nvipy")
 
 [node name="SelectedIndicator" type="Polygon2D" parent="."]
+visible = false
 z_as_relative = false
 position = Vector2(-74, 15)
 color = Color(0.678141, 0.0957562, 0.203289, 1)
 polygon = PackedVector2Array(41, -59, 107, -59, 107, 29, 41, 29)
-
-[connection signal="input_event" from="SelectableArea" to="." method="on_card_input"]

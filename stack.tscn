@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu67bn041c11b"]
+
+[ext_resource type="Texture2D" uid="uid://cd35tg7p88otn" path="res://Sprites/empty_stack.png" id="1_nbpxh"]
+[ext_resource type="Script" path="res://stack.gd" id="2_s5re6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_epsxx"]
+size = Vector2(66, 88)
+
+[node name="Stack" type="Node2D" node_paths=PackedStringArray("selection_area")]
+script = ExtResource("2_s5re6")
+selection_area = NodePath("Area2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_nbpxh")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_epsxx")
