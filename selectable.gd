@@ -8,12 +8,10 @@ signal selected(selectable: Selectable)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if selection_area:
-		print("Found a selection area")
 		selection_area.input_event.connect(_on_area_2d_input)
 
 func _on_area_2d_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
-		print("Clicked a selectable area")
 		selected.emit(self)
 
 func _select() -> void:

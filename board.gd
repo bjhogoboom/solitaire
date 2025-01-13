@@ -13,5 +13,4 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_selectable_selected(selectable: Selectable) -> void:
-	print("OnSelectableSelected")
 	selectable._select()
