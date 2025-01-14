@@ -1,9 +1,5 @@
 class_name Stack
-extends Selectable
+extends Node
 
 func _ready() -> void:
-	super()
-
-
-func _select() -> void:
-	print("Stack selected!")
+	pass
