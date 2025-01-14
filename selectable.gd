@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func _on_area_2d_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
-		selected.emit(self)
+		SignalBus.selectable_selected.emit(self)
 
 func _select() -> void:
 	pass

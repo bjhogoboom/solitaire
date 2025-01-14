@@ -11,7 +11,21 @@ func _ready() -> void:
 		stats = CardStats.random_card_stats()
 	sprite_2d.texture = stats.texture()
 	super()
+	SignalBus.selectable_selected.connect(_on_signal_bus_selected)
+
+func _toggle_select() -> void:
+	selected_indicator.visible = !selected_indicator.visible
 
 func _select() -> void:
 	print("Card selected! " + str(stats))
-	selected_indicator.visible = !selected_indicator.visible
+	selected_indicator.visible = true
+
+func _unselect() -> void:
+	print("Card unselected! " + str(stats))
+	selected_indicator.visible = false
+
+func _on_signal_bus_selected(selectable: Selectable) -> void:
+	if selectable == self:
+		_toggle_select()
+	else:
+		_unselect()
