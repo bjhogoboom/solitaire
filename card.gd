@@ -6,6 +6,7 @@ extends Selectable
 
 var stats: CardStats
 var selected: bool
+const CHILD_OFFSET = Vector2(0, 20)
 
 func _ready() -> void:
 	if !stats:
@@ -29,8 +30,12 @@ func _unselect() -> void:
 	selected_indicator.visible = false
 	selected = false
 
-func _on_signal_bus_selected(selectable: Selectable) -> void:
-	if selectable == self:
-		_toggle_select()
-	else:
-		_unselect()
+func stackable(card: Card) -> bool:
+	if card == self:
+		return false
+	return true
+
+func stack(card: Card) -> void:
+	if stackable(card):
+		card.reparent(self)
+		card.position = Vector2.ZERO + CHILD_OFFSET
