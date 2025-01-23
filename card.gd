@@ -4,7 +4,7 @@ extends Selectable
 @onready var selected_indicator: Polygon2D = $SelectedIndicator
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
-var stats: CardStats
+@export var stats: CardStats
 var selected: bool
 const CHILD_OFFSET = Vector2(0, 20)
 
@@ -31,9 +31,19 @@ func _unselect() -> void:
 	selected = false
 
 func stackable(card: Card) -> bool:
-	if card == self:
-		return false
-	return true
+	#if card == self:
+		#return false
+	var can_stack = self.stats.stackable(card.stats)
+	var str_can = ""
+	if can_stack:
+		str_can = " is "
+	else:
+		str_can = " is not "
+	print(str(card) + str_can + "stackable on " + str(self))
+	return self.stats.stackable(card.stats)
+	
+func _to_string():
+	return str(stats)
 
 func stack(card: Card) -> void:
 	if stackable(card):

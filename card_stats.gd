@@ -11,6 +11,12 @@ const SUIT_NAMES: Dictionary = {
 	Suit.DIAMOND: "Diamond",
 	Suit.HEART: "Heart",
 }
+const COLORS: Dictionary = {
+	Suit.CLOVER: "black",
+	Suit.SPADE: "black",
+	Suit.DIAMOND: "red",
+	Suit.HEART: "red",
+}
 const TEXTURE_EXTENSION = ".png"
 
 # Make sure that every parameter has a default value.
@@ -42,7 +48,9 @@ func file_name() -> String:
 
 func texture() -> Texture2D:
 	return load("res://Sprites/" + SUIT_NAMES[suit] + "/" + file_name())
-	
+
+func stackable(stats: CardStats) -> bool:
+	return COLORS[stats.suit] != COLORS[self.suit] && stats.value == self.value - 1
 
 static func random_card_stats() -> CardStats:
 	var rng = RandomNumberGenerator.new()
