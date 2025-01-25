@@ -23,13 +23,14 @@ const DEBUG_COLORS: Dictionary = {
 	Colors.RED: Color(1.0, 0.0, 0.0, 0.2)
 }
 const TEXTURE_EXTENSION = ".png"
+const VALUES_COUNT = 13
 
 # Make sure that every parameter has a default value.
 # Otherwise, there will be problems with creating and editing
 # your resource via the inspector.
 func _init(p_suit = Suit.CLOVER, p_value = 2):
 	suit = p_suit
-	assert(p_value > 0 and p_value < 14, "Card value is invalid")
+	assert(p_value > 0 and p_value <= VALUES_COUNT, "Card value is invalid")
 	value = p_value
 
 func _to_string() -> String:

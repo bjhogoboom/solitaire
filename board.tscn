@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://rvmgo4t7a3er"]
+[gd_scene load_steps=10 format=3 uid="uid://rvmgo4t7a3er"]
 
 [ext_resource type="Script" path="res://board.gd" id="1_1hc8i"]
 [ext_resource type="PackedScene" uid="uid://dcx2fh3455htq" path="res://card.tscn" id="1_klhmh"]
 [ext_resource type="Script" path="res://card_stats.gd" id="3_svptf"]
+[ext_resource type="PackedScene" uid="uid://cu67bn041c11b" path="res://deck.tscn" id="4_l78fl"]
 
 [sub_resource type="Resource" id="Resource_fc66r"]
 script = ExtResource("3_svptf")
@@ -52,3 +53,5 @@ stats = SubResource("Resource_xnwsk")
 [node name="Diamond5" parent="." instance=ExtResource("1_klhmh")]
 position = Vector2(120, -196)
 stats = SubResource("Resource_ao4uq")
+
+[node name="Deck" parent="." instance=ExtResource("4_l78fl")]
