@@ -10,8 +10,11 @@ func _ready() -> void:
 	SelectionManager.selectable_selected.connect(_on_selectable_selected)
 
 
-func _on_area_2d_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+func _on_area_2d_input(viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
+		print("card input event")
+		get_viewport().set_input_as_handled()
+		viewport.set_input_as_handled()
 		SelectionManager.selectable_selected.emit(self)
 
 func _select() -> void:

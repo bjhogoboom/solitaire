@@ -36,6 +36,7 @@ shader_parameter/line_thickness = 3.695
 size = Vector2(60, 82)
 
 [node name="Card" type="Node2D" node_paths=PackedStringArray("selection_area")]
+scale = Vector2(2, 2)
 script = ExtResource("1_ifc2y")
 selection_area = NodePath("SelectableArea")
 
@@ -45,6 +46,7 @@ material = SubResource("ShaderMaterial_ckbct")
 texture = ExtResource("1_pxj3i")
 
 [node name="SelectableArea" type="Area2D" parent="."]
+priority = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableArea"]
 shape = SubResource("RectangleShape2D_nvipy")
@@ -53,5 +55,5 @@ shape = SubResource("RectangleShape2D_nvipy")
 visible = false
 z_as_relative = false
 position = Vector2(-74, 15)
-color = Color(0.678141, 0.0957562, 0.203289, 1)
+color = Color(0.209477, 0.333337, 0.72218, 1)
 polygon = PackedVector2Array(41, -59, 107, -59, 107, 29, 41, 29)

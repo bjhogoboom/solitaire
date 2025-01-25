@@ -20,3 +20,8 @@ func set_selected_card(card: Card):
 
 func _on_selectable_selected(card: Card):
 	set_selected_card(card)
+
+func unselect():
+	if selected_card:
+		selected_card._unselect()
+	selected_card = null
