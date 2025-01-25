@@ -5,6 +5,7 @@ extends Resource
 @export var value: int
 
 enum Suit {CLOVER, SPADE, DIAMOND, HEART}
+enum Colors {RED, BLACK}
 const SUIT_NAMES: Dictionary = {
 	Suit.CLOVER: "Clover",
 	Suit.SPADE: "Spade",
@@ -12,10 +13,14 @@ const SUIT_NAMES: Dictionary = {
 	Suit.HEART: "Heart",
 }
 const COLORS: Dictionary = {
-	Suit.CLOVER: "black",
-	Suit.SPADE: "black",
-	Suit.DIAMOND: "red",
-	Suit.HEART: "red",
+	Suit.CLOVER: Colors.BLACK,
+	Suit.SPADE: Colors.BLACK,
+	Suit.DIAMOND: Colors.RED,
+	Suit.HEART: Colors.RED,
+}
+const DEBUG_COLORS: Dictionary = {
+	Colors.BLACK: Color(0.0, 1.0, 0.0, 0.2),
+	Colors.RED: Color(1.0, 0.0, 0.0, 0.2)
 }
 const TEXTURE_EXTENSION = ".png"
 
@@ -51,6 +56,9 @@ func texture() -> Texture2D:
 
 func stackable(stats: CardStats) -> bool:
 	return COLORS[stats.suit] != COLORS[self.suit] && stats.value == self.value - 1
+	
+func debug_color() -> Color:
+	return DEBUG_COLORS[COLORS[suit]]
 
 static func random_card_stats() -> CardStats:
 	var rng = RandomNumberGenerator.new()

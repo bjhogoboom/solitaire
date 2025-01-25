@@ -33,12 +33,12 @@ shader_parameter/line_color = Color(0.827046, 0.176083, 0.38582, 1)
 shader_parameter/line_thickness = 3.695
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nvipy"]
+resource_local_to_scene = true
 size = Vector2(60, 82)
 
-[node name="Card" type="Node2D" node_paths=PackedStringArray("selection_area")]
+[node name="Card" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_ifc2y")
-selection_area = NodePath("SelectableArea")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 12
@@ -46,10 +46,12 @@ material = SubResource("ShaderMaterial_ckbct")
 texture = ExtResource("1_pxj3i")
 
 [node name="SelectableArea" type="Area2D" parent="."]
+z_index = 4096
 priority = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableArea"]
 shape = SubResource("RectangleShape2D_nvipy")
+debug_color = Color(0.0644239, 0.379897, 0.27257, 0.42)
 
 [node name="SelectedIndicator" type="Polygon2D" parent="."]
 visible = false

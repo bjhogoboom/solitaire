@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://rvmgo4t7a3er"]
+[gd_scene load_steps=7 format=3 uid="uid://rvmgo4t7a3er"]
 
 [ext_resource type="Script" path="res://board.gd" id="1_1hc8i"]
 [ext_resource type="PackedScene" uid="uid://dcx2fh3455htq" path="res://card.tscn" id="1_klhmh"]
 [ext_resource type="PackedScene" uid="uid://cu67bn041c11b" path="res://stack.tscn" id="2_o7nde"]
 [ext_resource type="Script" path="res://card_stats.gd" id="3_svptf"]
-[ext_resource type="PackedScene" uid="uid://cimf7byvegytq" path="res://background.tscn" id="5_arl1e"]
 
 [sub_resource type="Resource" id="Resource_fc66r"]
 script = ExtResource("3_svptf")
@@ -31,5 +30,3 @@ stats = SubResource("Resource_7am84")
 
 [node name="Stack" parent="." instance=ExtResource("2_o7nde")]
 position = Vector2(-49, -6)
-
-[node name="Background" parent="." instance=ExtResource("5_arl1e")]
