@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://rvmgo4t7a3er"]
+[gd_scene load_steps=9 format=3 uid="uid://rvmgo4t7a3er"]
 
 [ext_resource type="Script" path="res://board.gd" id="1_1hc8i"]
 [ext_resource type="PackedScene" uid="uid://dcx2fh3455htq" path="res://card.tscn" id="1_klhmh"]
-[ext_resource type="PackedScene" uid="uid://cu67bn041c11b" path="res://stack.tscn" id="2_o7nde"]
 [ext_resource type="Script" path="res://card_stats.gd" id="3_svptf"]
 
 [sub_resource type="Resource" id="Resource_fc66r"]
@@ -14,6 +13,21 @@ value = 4
 script = ExtResource("3_svptf")
 suit = 2
 value = 3
+
+[sub_resource type="Resource" id="Resource_0d166"]
+script = ExtResource("3_svptf")
+suit = 1
+value = 2
+
+[sub_resource type="Resource" id="Resource_xnwsk"]
+script = ExtResource("3_svptf")
+suit = 3
+value = 5
+
+[sub_resource type="Resource" id="Resource_ao4uq"]
+script = ExtResource("3_svptf")
+suit = 2
+value = 5
 
 [node name="Board" type="Node"]
 script = ExtResource("1_1hc8i")
@@ -28,5 +42,13 @@ stats = SubResource("Resource_fc66r")
 position = Vector2(281, -38)
 stats = SubResource("Resource_7am84")
 
-[node name="Stack" parent="." instance=ExtResource("2_o7nde")]
-position = Vector2(-49, -6)
+[node name="Spade2" parent="." instance=ExtResource("1_klhmh")]
+stats = SubResource("Resource_0d166")
+
+[node name="Heart5" parent="." instance=ExtResource("1_klhmh")]
+position = Vector2(-197, -173)
+stats = SubResource("Resource_xnwsk")
+
+[node name="Diamond5" parent="." instance=ExtResource("1_klhmh")]
+position = Vector2(120, -196)
+stats = SubResource("Resource_ao4uq")

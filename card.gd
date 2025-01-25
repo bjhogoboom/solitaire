@@ -29,15 +29,27 @@ func _on_area_2d_input(viewport: Node, event: InputEvent, _shape_idx: int) -> vo
 		get_viewport().set_input_as_handled()
 		viewport.set_input_as_handled()
 		SelectionManager.card_selected.emit(self)
+		
+func show_selection_indicators() -> void:
+	selected_indicator.visible = true
+	for child in get_children():
+			if child is Card:
+				child.show_selection_indicators()
+				
+func hide_selection_indicators() -> void:
+	selected_indicator.visible = false
+	for child in get_children():
+			if child is Card:
+				child.hide_selection_indicators()
 
 func _select() -> void:
 	print("Card selected! " + str(stats))
-	selected_indicator.visible = true
+	show_selection_indicators()
 	selected = true
 
 func _unselect() -> void:
 	print("Card unselected! " + str(stats))
-	selected_indicator.visible = false
+	hide_selection_indicators()
 	selected = false
 
 func stackable(card: Card) -> bool:
@@ -50,16 +62,24 @@ func stackable(card: Card) -> bool:
 	print(str(card) + str_can + "stackable on " + str(self))
 	return self.stats.stackable(card.stats)
 
-func resize_collision_shape() -> void:
+func use_parent_collision_shape() -> void:
 	var shape = collision_shape_2d.shape
 	shape.set_size(Vector2(shape.size.x, CHILD_OFFSET.y))
 	collision_shape_2d.position = -CHILD_OFFSET*1.5
+
+func use_childless_collision_shape() -> void:
+	var shape = collision_shape_2d.shape
+	shape.set_size(Vector2(shape.size.x, 82))
+	collision_shape_2d.position = Vector2.ZERO
 
 func _to_string():
 	return str(stats)
 
 func stack(card: Card) -> void:
 	if stackable(card):
+		var parent_card = card.get_parent()
+		if parent_card is Card:
+			parent_card.use_childless_collision_shape()
 		card.reparent(self)
 		card.position = Vector2.ZERO + CHILD_OFFSET
-		resize_collision_shape()
+		use_parent_collision_shape()
