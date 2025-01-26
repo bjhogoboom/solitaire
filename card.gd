@@ -10,6 +10,12 @@ extends Node2D
 var selected: bool
 const CHILD_OFFSET = Vector2(0, 20)
 
+static func new_card(p_stats: CardStats = null) -> Card:
+	var scene: PackedScene = load("res://card.tscn")
+	var card = scene.instantiate()
+	card.stats = p_stats
+	return card
+
 func _ready() -> void:
 	if !stats:
 		stats = CardStats.random_card_stats()

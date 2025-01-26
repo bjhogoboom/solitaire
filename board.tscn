@@ -55,3 +55,4 @@ position = Vector2(120, -196)
 stats = SubResource("Resource_ao4uq")
 
 [node name="Deck" parent="." instance=ExtResource("4_l78fl")]
+position = Vector2(507, -231)
