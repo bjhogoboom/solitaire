@@ -12,15 +12,10 @@ func stack(card: Card) -> void:
 
 func stackable(card: Card) -> bool:
 	if cards.size() == 0:
-		print("Trying first stack for " + str(card))
-		print("Value is 1: " + str(card.stats.value == 1))
 		return card.stats.value == 1
 
-	print("Trying subsequent stack for " + str(card))
 	var same_suit = top_card().stats.suit == card.stats.suit
-	print("Same suit? " + str(same_suit))
 	var value_stackable = top_card().stats.value == (card.stats.value - 1)
-	print("Value stackable? " + str(value_stackable))
 	return same_suit && value_stackable
 
 func top_card() -> Card:

@@ -31,7 +31,6 @@ func _toggle_select() -> void:
 
 func _on_area_2d_input(viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
-		print("card input event")
 		get_viewport().set_input_as_handled()
 		viewport.set_input_as_handled()
 		SelectionManager.card_selected.emit(self)
@@ -49,23 +48,14 @@ func hide_selection_indicators() -> void:
 				child.hide_selection_indicators()
 
 func _select() -> void:
-	print("Card selected! " + str(stats))
 	show_selection_indicators()
 	selected = true
 
 func _unselect() -> void:
-	print("Card unselected! " + str(stats))
 	hide_selection_indicators()
 	selected = false
 
 func stackable(card: Card) -> bool:
-	var can_stack = self.stats.stackable(card.stats)
-	var str_can = ""
-	if can_stack:
-		str_can = " is "
-	else:
-		str_can = " is not "
-	print(str(card) + str_can + "stackable on " + str(self))
 	return self.stats.stackable(card.stats)
 
 func use_parent_collision_shape() -> void:
