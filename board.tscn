@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://rvmgo4t7a3er"]
+[gd_scene load_steps=13 format=3 uid="uid://rvmgo4t7a3er"]
 
 [ext_resource type="Script" path="res://board.gd" id="1_1hc8i"]
 [ext_resource type="PackedScene" uid="uid://dcx2fh3455htq" path="res://card.tscn" id="1_klhmh"]
 [ext_resource type="Script" path="res://card_stats.gd" id="3_svptf"]
 [ext_resource type="PackedScene" uid="uid://cu67bn041c11b" path="res://deck.tscn" id="4_l78fl"]
+[ext_resource type="PackedScene" uid="uid://c46d0nle6qlse" path="res://ace_stack.tscn" id="5_l7b3b"]
 
 [sub_resource type="Resource" id="Resource_fc66r"]
 script = ExtResource("3_svptf")
@@ -18,7 +19,7 @@ value = 3
 [sub_resource type="Resource" id="Resource_0d166"]
 script = ExtResource("3_svptf")
 suit = 1
-value = 2
+value = 1
 
 [sub_resource type="Resource" id="Resource_xnwsk"]
 script = ExtResource("3_svptf")
@@ -30,29 +31,60 @@ script = ExtResource("3_svptf")
 suit = 2
 value = 5
 
+[sub_resource type="Resource" id="Resource_2472y"]
+script = ExtResource("3_svptf")
+suit = 1
+value = 2
+
+[sub_resource type="Resource" id="Resource_mj7so"]
+script = ExtResource("3_svptf")
+suit = 1
+value = 3
+
 [node name="Board" type="Node"]
 script = ExtResource("1_1hc8i")
 
 [node name="Club4" parent="." instance=ExtResource("1_klhmh")]
-position = Vector2(-362, 11)
+position = Vector2(-451, 167)
 stats = SubResource("Resource_fc66r")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Diamond3" parent="." instance=ExtResource("1_klhmh")]
-position = Vector2(281, -38)
+position = Vector2(422, 73)
 stats = SubResource("Resource_7am84")
 
-[node name="Spade2" parent="." instance=ExtResource("1_klhmh")]
+[node name="Spade1" parent="." instance=ExtResource("1_klhmh")]
+position = Vector2(-85, 192)
 stats = SubResource("Resource_0d166")
 
 [node name="Heart5" parent="." instance=ExtResource("1_klhmh")]
-position = Vector2(-197, -173)
+position = Vector2(-283, 175)
 stats = SubResource("Resource_xnwsk")
 
 [node name="Diamond5" parent="." instance=ExtResource("1_klhmh")]
-position = Vector2(120, -196)
+position = Vector2(210, 208)
 stats = SubResource("Resource_ao4uq")
 
 [node name="Deck" parent="." instance=ExtResource("4_l78fl")]
 position = Vector2(507, -231)
+
+[node name="AceStack" parent="." instance=ExtResource("5_l7b3b")]
+position = Vector2(-502, -229)
+
+[node name="AceStack2" parent="." instance=ExtResource("5_l7b3b")]
+position = Vector2(-361, -229)
+
+[node name="AceStack3" parent="." instance=ExtResource("5_l7b3b")]
+position = Vector2(-219, -229)
+
+[node name="AceStack4" parent="." instance=ExtResource("5_l7b3b")]
+position = Vector2(-78, -229)
+
+[node name="Spade2" parent="." instance=ExtResource("1_klhmh")]
+position = Vector2(-280, -18)
+stats = SubResource("Resource_2472y")
+
+[node name="Spade3" parent="." instance=ExtResource("1_klhmh")]
+position = Vector2(-114, -20)
+stats = SubResource("Resource_mj7so")

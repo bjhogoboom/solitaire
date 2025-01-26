@@ -77,6 +77,12 @@ func use_childless_collision_shape() -> void:
 	var shape = collision_shape_2d.shape
 	shape.set_size(Vector2(shape.size.x, 82))
 	collision_shape_2d.position = Vector2.ZERO
+	
+func disable() -> void:
+	selection_area.input_pickable = false
+	
+func enable() -> void:
+	selection_area.input_pickable = true
 
 func _to_string():
 	return str(stats)
