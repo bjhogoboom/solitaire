@@ -8,6 +8,7 @@ extends Node2D
 
 @export var stats: CardStats
 var selected: bool
+var ace_stacked: bool
 const CHILD_OFFSET = Vector2(0, 20)
 
 static func new_card(p_stats: CardStats = null) -> Card:
@@ -79,9 +80,16 @@ func _to_string():
 
 func stack(card: Card) -> void:
 	if stackable(card):
-		var parent_card = card.get_parent()
-		if parent_card is Card:
-			parent_card.use_childless_collision_shape()
-		card.reparent(self)
+		var parent = card.get_parent()
+		if parent is Card:
+			parent.use_childless_collision_shape()
+		card.reparent_and_pop(self)
+		card.enable()
+		card.ace_stacked = false
 		card.position = Vector2.ZERO + CHILD_OFFSET
 		use_parent_collision_shape()
+
+func reparent_and_pop(new_parent: Node) -> void:
+	if get_parent() is AceStack:
+		get_parent().pop()
+	reparent(new_parent)

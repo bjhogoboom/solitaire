@@ -19,8 +19,10 @@ func set_selected_card(card: Card):
 func _on_card_selected(card: Card):
 	set_selected_card(card)
 	
-func stack_to_ace_stack(ace_stack: AceStack):
+func ace_stack_selected(ace_stack: AceStack):
 	if !selected_card:
+		selected_card = ace_stack.top_card()
+		ace_stack.select_top_card()
 		return
 	ace_stack.stack(selected_card)
 	unselect()
