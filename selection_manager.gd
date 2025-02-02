@@ -27,6 +27,13 @@ func ace_stack_selected(ace_stack: AceStack):
 	ace_stack.stack(selected_card)
 	unselect()
 
+func rank_selected(rank: Rank):
+	print("Rank select?")
+	if !selected_card:
+		return
+	rank.stack(selected_card)
+	unselect()
+
 func unselect():
 	if selected_card:
 		selected_card._unselect()

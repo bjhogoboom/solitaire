@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf5irbuq0p7cd"]
+
+[ext_resource type="Texture2D" uid="uid://cd35tg7p88otn" path="res://Sprites/empty_stack.png" id="1_jlhes"]
+[ext_resource type="Script" path="res://rank.gd" id="1_m4kiu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1f4m1"]
+size = Vector2(64, 85)
+
+[node name="Rank" type="Node2D"]
+script = ExtResource("1_m4kiu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_jlhes")
+
+[node name="SelectableArea" type="Area2D" parent="."]
+scale = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableArea"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_1f4m1")
+
+[connection signal="input_event" from="SelectableArea" to="." method="_on_area_2d_input_event"]

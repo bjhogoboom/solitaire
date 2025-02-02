@@ -9,6 +9,8 @@ func stack(card: Card) -> void:
 		var parent = card.get_parent()
 		if parent is Card:
 			parent.use_childless_collision_shape()
+		if parent is Deck:
+			parent.pop()
 		card.reparent(self)
 		card.disable()
 		card.position = Vector2.ZERO

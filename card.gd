@@ -1,28 +1,41 @@
 class_name Card
 extends Node2D
 
+enum Flip {FACE_UP, FACE_DOWN}
+
 @onready var selected_indicator: Polygon2D = $SelectedIndicator
-@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var card_front_sprite: Sprite2D = $CardFront
+@onready var card_back_sprite: Sprite2D = $CardBack
 @onready var selection_area: Area2D = $SelectableArea
 @onready var collision_shape_2d: CollisionShape2D = $SelectableArea/CollisionShape2D
 
 @export var stats: CardStats
 var selected: bool
-var ace_stacked: bool
+var flip: Flip
 const CHILD_OFFSET = Vector2(0, 20)
 
-static func new_card(p_stats: CardStats = null) -> Card:
+static func new_card(p_stats: CardStats = null, p_flip: Flip = Flip.FACE_UP) -> Card:
 	var scene: PackedScene = load("res://card.tscn")
 	var card = scene.instantiate()
 	card.stats = p_stats
+	card.flip = p_flip
 	return card
 
 func _ready() -> void:
 	if !stats:
 		stats = CardStats.random_card_stats()
-	sprite_2d.texture = stats.texture()
+	card_front_sprite.texture = stats.texture()
 	selection_area.input_event.connect(_on_area_2d_input)
 	collision_shape_2d.debug_color = stats.debug_color()
+
+func _process(delta: float) -> void:
+	if flip == Flip.FACE_UP:
+		card_front_sprite.visible = true
+		card_back_sprite.visible = false
+	else:
+		card_front_sprite.visible = false
+		card_back_sprite.visible = true
+	
 
 func _toggle_select() -> void:
 	if selected:
@@ -34,8 +47,18 @@ func _on_area_2d_input(viewport: Node, event: InputEvent, _shape_idx: int) -> vo
 	if event.is_action_pressed("click"):
 		get_viewport().set_input_as_handled()
 		viewport.set_input_as_handled()
-		SelectionManager.card_selected.emit(self)
-		
+		if flip == Flip.FACE_UP:
+			SelectionManager.card_selected.emit(self)
+		else:
+			flip_over()
+			
+func flip_over():
+	if flippable():
+		flip = Flip.FACE_UP
+
+func flippable():
+	return get_children().is_empty()
+
 func show_selection_indicators() -> void:
 	selected_indicator.visible = true
 	for child in get_children():
@@ -85,11 +108,10 @@ func stack(card: Card) -> void:
 			parent.use_childless_collision_shape()
 		card.reparent_and_pop(self)
 		card.enable()
-		card.ace_stacked = false
 		card.position = Vector2.ZERO + CHILD_OFFSET
 		use_parent_collision_shape()
 
 func reparent_and_pop(new_parent: Node) -> void:
-	if get_parent() is AceStack:
+	if get_parent() is AceStack || get_parent() is Deck || get_parent() is Rank:
 		get_parent().pop()
 	reparent(new_parent)

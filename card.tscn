@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcx2fh3455htq"]
+[gd_scene load_steps=8 format=3 uid="uid://dcx2fh3455htq"]
 
 [ext_resource type="Script" path="res://card.gd" id="1_ifc2y"]
 [ext_resource type="Texture2D" uid="uid://b8c7g840nn8lx" path="res://Sprites/Clover/card_1_clover.png" id="1_pxj3i"]
@@ -36,11 +36,18 @@ shader_parameter/line_thickness = 3.695
 resource_local_to_scene = true
 size = Vector2(60, 82)
 
+[sub_resource type="Gradient" id="Gradient_fxnrk"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8r8cg"]
+gradient = SubResource("Gradient_fxnrk")
+fill_from = Vector2(0.517094, 0.438034)
+
 [node name="Card" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_ifc2y")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CardFront" type="Sprite2D" parent="."]
+visible = false
 z_index = 12
 material = SubResource("ShaderMaterial_ckbct")
 texture = ExtResource("1_pxj3i")
@@ -59,3 +66,8 @@ z_as_relative = false
 position = Vector2(-74, 15)
 color = Color(0.209477, 0.333337, 0.72218, 1)
 polygon = PackedVector2Array(41, -59, 107, -59, 107, 29, 41, 29)
+
+[node name="CardBack" type="Sprite2D" parent="."]
+position = Vector2(-0.75, 0)
+scale = Vector2(0.976562, 1.32812)
+texture = SubResource("GradientTexture2D_8r8cg")
