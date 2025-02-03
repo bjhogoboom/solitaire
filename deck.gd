@@ -20,6 +20,8 @@ func _on_area_2d_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> v
 		deal()
 
 func deal() -> void:
+	if cards.size() == 0:
+		return
 	var card = Card.new_card(cards.pop_back())
 	card.position = Vector2(-124, 0)
 	add_child(card)
