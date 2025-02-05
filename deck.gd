@@ -1,9 +1,9 @@
 class_name Deck
 extends Node
 
+const DECK_SIZE = 52
 var cards: Array = []
 var dealt_cards: Array = []
-const DECK_SIZE = 52
 
 
 func _ready() -> void:

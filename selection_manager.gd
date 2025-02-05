@@ -1,8 +1,8 @@
 extends Node
 
-var selected_card: Card
-
 signal card_selected(card: Card)
+
+var selected_card: Card
 
 
 func _ready() -> void:

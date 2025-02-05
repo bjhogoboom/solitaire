@@ -2,17 +2,18 @@ class_name Card
 extends Node2D
 
 enum Flip { FACE_UP, FACE_DOWN }
+const CHILD_OFFSET = Vector2(0, 20)
+
+@export var stats: CardStats
+
+var selected: bool
+var flip: Flip
 
 @onready var selected_indicator: Polygon2D = $SelectedIndicator
 @onready var card_front_sprite: Sprite2D = $CardFront
 @onready var card_back_sprite: Sprite2D = $CardBack
 @onready var selection_area: Area2D = $SelectableArea
 @onready var collision_shape_2d: CollisionShape2D = $SelectableArea/CollisionShape2D
-
-@export var stats: CardStats
-var selected: bool
-var flip: Flip
-const CHILD_OFFSET = Vector2(0, 20)
 
 
 static func new_card(p_stats: CardStats = null, p_flip: Flip = Flip.FACE_UP) -> Card:
@@ -35,7 +36,7 @@ func _ready() -> void:
 		disable()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if flip == Flip.FACE_UP:
 		card_front_sprite.visible = true
 		card_back_sprite.visible = false

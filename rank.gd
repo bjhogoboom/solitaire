@@ -1,9 +1,9 @@
 class_name Rank
 extends Node2D
 
-@onready var selection_area: Area2D = $SelectableArea
-
 var cards: Array = []
+
+@onready var selection_area: Area2D = $SelectableArea
 
 
 func force_stack(card: Card) -> void:

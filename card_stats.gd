@@ -1,9 +1,6 @@
 class_name CardStats
 extends Resource
 
-@export var suit: Suit
-@export var value: int
-
 enum Suit { CLOVER, SPADE, DIAMOND, HEART }
 enum Colors { RED, BLACK }
 const SUIT_NAMES: Dictionary = {
@@ -23,6 +20,9 @@ const DEBUG_COLORS: Dictionary = {
 }
 const TEXTURE_EXTENSION = ".png"
 const VALUES_COUNT = 13
+
+@export var suit: Suit
+@export var value: int
 
 
 # Make sure that every parameter has a default value.
