@@ -7,24 +7,17 @@ func stack(card: Card) -> void:
 	if stackable(card):
 		cards.push_back(card)
 		var parent = card.get_parent()
-		if parent is Card:
-			parent.use_childless_collision_shape()
-		if parent is Deck:
-			parent.pop()
+		card.unstack_from_parent(parent)
 		card.reparent(self)
 		card.disable()
 		card.position = Vector2.ZERO
 
 func stackable(card: Card) -> bool:
-	print("checking ace stack stackable")
 	if cards.size() == 0:
-		print("ace stack stackable: " + str(card.stats.value == 1))
-
 		return card.stats.value == 1
 
 	var same_suit = top_card().stats.suit == card.stats.suit
 	var value_stackable = top_card().stats.value == (card.stats.value - 1)
-	print("ace stack stackable: " + str(same_suit) + str(value_stackable))
 	return same_suit && value_stackable
 
 func top_card() -> Card:
