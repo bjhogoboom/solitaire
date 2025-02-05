@@ -3,6 +3,7 @@ extends Node2D
 
 var cards: Array = []
 
+
 func stack(card: Card) -> void:
 	if stackable(card):
 		cards.push_back(card)
@@ -12,6 +13,7 @@ func stack(card: Card) -> void:
 		card.disable()
 		card.position = Vector2.ZERO
 
+
 func stackable(card: Card) -> bool:
 	if cards.size() == 0:
 		return card.stats.value == 1
@@ -20,15 +22,19 @@ func stackable(card: Card) -> bool:
 	var value_stackable = top_card().stats.value == (card.stats.value - 1)
 	return same_suit && value_stackable
 
+
 func top_card() -> Card:
 	return null if cards.is_empty() else cards.back()
+
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
 		SelectionManager.ace_stack_selected(self)
 
+
 func select_top_card():
 	top_card().show_selection_indicators()
-	
+
+
 func pop() -> void:
 	cards.pop_back()
