@@ -52,7 +52,8 @@ position = Vector2(-219, -229)
 [node name="AceStack4" parent="AceStacks" instance=ExtResource("5_l7b3b")]
 position = Vector2(-78, -229)
 
-[node name="GameState" type="Node" parent="." node_paths=PackedStringArray("deck", "ranks_parent")]
+[node name="GameState" type="Node" parent="." node_paths=PackedStringArray("deck", "ranks_parent", "ace_stacks_parent")]
 script = ExtResource("7_nr8te")
 deck = NodePath("../Deck")
 ranks_parent = NodePath("../Ranks")
+ace_stacks_parent = NodePath("../AceStacks")

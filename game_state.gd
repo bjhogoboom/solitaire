@@ -3,16 +3,37 @@ extends Node
 
 @export var deck: Deck
 @export var ranks_parent: Node
+@export var ace_stacks_parent: Node
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	reset()
+	for ace_stack in ace_stacks_parent.get_children():
+		if ace_stack is AceStack:
+			ace_stack.ace_stacked.connect(on_ace_stacked)
 
 
 func reset() -> void:
 	deck.reset()
 	deal()
+
+
+func on_ace_stacked(_card: Card) -> void:
+	check_win_condition()
+
+
+func check_win_condition() -> void:
+	var won = true
+	for ace_stack in ace_stacks_parent.get_children():
+		if ace_stack is AceStack:
+			if ace_stack.num_cards < 13:
+				won = false
+				break
+	if won:
+		print("YOU WON")
+	else:
+		print("YOU HAVEN'T WON YET")
 
 
 func deal() -> void:

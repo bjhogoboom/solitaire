@@ -1,7 +1,12 @@
 class_name AceStack
 extends Node2D
 
+signal ace_stacked(card: Card)
+
 var cards: Array = []
+var num_cards: int:
+	get:
+		return cards.size()
 
 
 func stack(card: Card) -> void:
@@ -12,6 +17,7 @@ func stack(card: Card) -> void:
 		card.reparent(self)
 		card.disable()
 		card.position = Vector2.ZERO
+		ace_stacked.emit(card)
 
 
 func stackable(card: Card) -> bool:
