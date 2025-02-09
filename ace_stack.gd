@@ -39,7 +39,8 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 
 
 func select_top_card():
-	top_card().show_selection_indicators()
+	if top_card():
+		top_card().show_selection_indicators()
 
 
 func pop() -> void:

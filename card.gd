@@ -8,6 +8,15 @@ const CHILD_OFFSET = Vector2(0, 20)
 
 var selected: bool
 var flip: Flip
+var rank: Rank:
+	get:
+		var parent = get_parent()
+		if parent is Rank || parent == null:
+			return parent
+		elif parent is Card:
+			return parent.rank
+		else:
+			return null
 
 @onready var selected_indicator: Polygon2D = $SelectedIndicator
 @onready var card_front_sprite: Sprite2D = $CardFront
@@ -141,7 +150,7 @@ func _stack_internal(card: Card, flip_parent: bool) -> void:
 	var parent = card.get_parent()
 	if parent is Card:
 		parent.use_childless_collision_shape()
-	unstack_from_parent(parent, flip_parent)
+	card.unstack_from_parent(parent, flip_parent)
 	card.safe_reparent(self)
 	card.enable()
 	card.position = Vector2.ZERO + CHILD_OFFSET
@@ -150,6 +159,7 @@ func _stack_internal(card: Card, flip_parent: bool) -> void:
 
 
 func safe_reparent(new_parent: Node) -> void:
+	print("Reparenting")
 	if get_parent():
 		reparent(new_parent)
 	else:
@@ -157,7 +167,12 @@ func safe_reparent(new_parent: Node) -> void:
 
 
 func unstack_from_parent(parent: Node, flip_parent: bool = true) -> void:
-	if parent is AceStack || parent is Rank:
+	if rank:
+		print("I am " + str(self))
+		print("Rank is " + rank.nice_name)
+		print("unstack from parent pop")
+		rank.pop()
+	if parent is AceStack:
 		parent.pop()
 	if parent is Deck:
 		parent.pop_from_dealt()

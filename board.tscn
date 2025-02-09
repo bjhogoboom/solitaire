@@ -12,29 +12,37 @@ ranks = [NodePath("Ranks/Rank"), NodePath("Ranks/Rank2"), NodePath("Ranks/Rank3"
 
 [node name="Deck" parent="." instance=ExtResource("4_l78fl")]
 position = Vector2(507, -231)
+debug_mode = true
 
 [node name="Ranks" type="Node" parent="."]
 
 [node name="Rank" parent="Ranks" instance=ExtResource("6_ofcoh")]
 position = Vector2(-501, -46)
+nice_name = "Rank 1"
 
 [node name="Rank2" parent="Ranks" instance=ExtResource("6_ofcoh")]
 position = Vector2(-359, -46)
+nice_name = "Rank 2"
 
 [node name="Rank3" parent="Ranks" instance=ExtResource("6_ofcoh")]
 position = Vector2(-216, -46)
+nice_name = "Rank 3"
 
 [node name="Rank4" parent="Ranks" instance=ExtResource("6_ofcoh")]
 position = Vector2(-78, -46)
+nice_name = "Rank 4"
 
 [node name="Rank5" parent="Ranks" instance=ExtResource("6_ofcoh")]
 position = Vector2(61, -46)
+nice_name = "Rank 5"
 
 [node name="Rank6" parent="Ranks" instance=ExtResource("6_ofcoh")]
 position = Vector2(202, -46)
+nice_name = "Rank 6"
 
 [node name="Rank7" parent="Ranks" instance=ExtResource("6_ofcoh")]
 position = Vector2(341, -46)
+nice_name = "Rank 7"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

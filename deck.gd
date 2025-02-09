@@ -2,6 +2,8 @@ class_name Deck
 extends Node
 
 const DECK_SIZE = 52
+
+@export var debug_mode: bool = false
 var cards: Array = []
 var dealt_cards: Array = []
 
@@ -15,7 +17,8 @@ func reset() -> void:
 	for suit in CardStats.Suit:
 		for value in CardStats.VALUES_COUNT:
 			cards.push_back(CardStats.new(CardStats.Suit[suit], value + 1))
-	cards.shuffle()
+	if not debug_mode:
+		cards.shuffle()
 
 
 func _on_area_2d_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -25,6 +28,7 @@ func _on_area_2d_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> v
 
 func deal() -> void:
 	if cards.size() == 0:
+		restart_deck()
 		return
 	var card = Card.new_card(cards.pop_back())
 	card.position = Vector2(-124, 0)
@@ -34,8 +38,12 @@ func deal() -> void:
 	dealt_cards.push_back(card)
 	SelectionManager.unselect()
 
-
-# STACKING FROM DECK TO ACE STACK MAKES ALL IN DEALT CARDS ENABLED
+func restart_deck() -> void:
+	for child in get_children():
+		if child is Card:
+			cards.push_front(child.stats)
+			child.queue_free()
+	dealt_cards = []
 
 
 func top_card() -> Card:

@@ -4,6 +4,7 @@ extends Node2D
 var cards: Array = []
 
 @onready var selection_area: Area2D = $SelectableArea
+@export var nice_name: String = "Rank 0"
 
 
 func force_stack(card: Card) -> void:
@@ -20,11 +21,13 @@ func _stack_internal(card: Card) -> void:
 		_stack_to_top_card(card)
 	else:
 		_stack_as_root(card)
+	print("Cards before stack on " + nice_name + ": " + str(cards))
 	cards.push_back(card)
+	print("Cards after stack on " + nice_name + ": " + str(cards))
 	var parent = card.get_parent()
 	if parent is Card:
 		parent.use_childless_collision_shape()
-	if parent is Deck || inter_rank_move(parent):
+	if parent is Deck: # || inter_rank_move(parent):
 		parent.pop()
 
 
@@ -47,16 +50,25 @@ func _stack_as_root(card: Card) -> void:
 
 
 func stackable(card: Card) -> bool:
+	print("trying to stack " + str(card) + " " + str(cards.size() == 0 && card.stats.value == 13))
+	print("cards: " + str(cards))
+	print("size " + str(cards.size()))
 	return cards.size() == 0 && card.stats.value == 13
 
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
+		print("Clicked rank")
+		print("Click cards: " + str(cards))
 		SelectionManager.rank_selected(self)
 
 
 func pop() -> void:
+	print("poppin from " + nice_name)
+	print("Cards before cards" + str(cards))
 	cards.pop_back()
+	print("Cards left: " + str(cards))
+	print("empty? " + str(cards.is_empty()))
 	if cards.is_empty():
 		enable()
 
