@@ -9,15 +9,11 @@ var num_cards: int:
 		return cards.size()
 
 
-func stack(card: Card) -> void:
-	if stackable(card):
-		cards.push_back(card)
-		var parent = card.get_parent()
-		card.unstack_from_parent(parent)
-		card.reparent(self)
-		card.disable()
-		card.position = Vector2.ZERO
-		ace_stacked.emit(card)
+func stack(card: Card) -> bool:
+	var card_stackable = stackable(card)
+	if card_stackable:
+		on_card_stacked_to(card)
+	return card_stackable
 
 
 func stackable(card: Card) -> bool:
@@ -45,3 +41,17 @@ func select_top_card():
 
 func pop() -> void:
 	cards.pop_back()
+
+
+func on_card_stacked_to(card: Card):
+	cards.push_back(card)
+	var parent = card.get_parent()
+	card.reparent(self)
+	card.disable()
+	card.position = Vector2.ZERO
+	ace_stacked.emit(card)
+
+
+func on_card_stacked_from(card: Card):
+	pop()
+	card.card_stacked.disconnect(on_card_stacked_from)

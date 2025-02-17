@@ -27,6 +27,7 @@ func _on_area_2d_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> v
 
 
 func deal() -> void:
+	SelectionManager.unselect()
 	if cards.size() == 0:
 		restart_deck()
 		return
@@ -36,7 +37,8 @@ func deal() -> void:
 	if top_card():
 		top_card().disable()
 	dealt_cards.push_back(card)
-	SelectionManager.unselect()
+	card.card_stacked.connect(on_card_stacked_from)
+
 
 func restart_deck() -> void:
 	for child in get_children():
@@ -58,3 +60,7 @@ func pop_from_dealt() -> void:
 
 func pop_from_deck(flip: Card.Flip) -> Card:
 	return Card.new_card(cards.pop_back(), flip)
+
+
+func on_card_stacked_from(_card: Card):
+	pop_from_dealt()

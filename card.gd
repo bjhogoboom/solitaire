@@ -1,6 +1,8 @@
 class_name Card
 extends Node2D
 
+signal card_stacked(card: Card)
+
 enum Flip { FACE_UP, FACE_DOWN }
 const CHILD_OFFSET = Vector2(0, 20)
 
@@ -13,10 +15,9 @@ var rank: Rank:
 		var parent = get_parent()
 		if parent is Rank || parent == null:
 			return parent
-		elif parent is Card:
+		if parent is Card:
 			return parent.rank
-		else:
-			return null
+		return null
 
 @onready var selected_indicator: Polygon2D = $SelectedIndicator
 @onready var card_front_sprite: Sprite2D = $CardFront
@@ -58,16 +59,8 @@ func _process(_delta: float) -> void:
 		disable()
 
 
-func _toggle_select() -> void:
-	if selected:
-		_unselect()
-	else:
-		_select()
-
-
 func _on_area_2d_input(viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed("click"):
-		print("CLICKED: " + str(self))
 		get_viewport().set_input_as_handled()
 		viewport.set_input_as_handled()
 		if flip == Flip.FACE_UP:
@@ -137,20 +130,19 @@ func _to_string():
 	return str(stats)
 
 
-func stack(card: Card) -> void:
-	if stackable(card):
-		_stack_internal(card, true)
+func stack(card: Card) -> bool:
+	var card_stackable = stackable(card)
+	if card_stackable:
+		_stack_internal(card)
+	return card_stackable
 
 
 func force_stack(card: Card) -> void:
-	_stack_internal(card, false)
+	_stack_internal(card)
+	card.card_stacked.connect(on_card_stacked_from)
 
 
-func _stack_internal(card: Card, flip_parent: bool) -> void:
-	var parent = card.get_parent()
-	if parent is Card:
-		parent.use_childless_collision_shape()
-	card.unstack_from_parent(parent, flip_parent)
+func _stack_internal(card: Card) -> void:
 	card.safe_reparent(self)
 	card.enable()
 	card.position = Vector2.ZERO + CHILD_OFFSET
@@ -158,25 +150,13 @@ func _stack_internal(card: Card, flip_parent: bool) -> void:
 	use_parent_collision_shape()
 
 
+func on_card_stacked_from(card: Card):
+	use_childless_collision_shape()
+	card.card_stacked.disconnect(on_card_stacked_from)
+
+
 func safe_reparent(new_parent: Node) -> void:
-	print("Reparenting")
 	if get_parent():
 		reparent(new_parent)
 	else:
 		new_parent.add_child(self)
-
-
-func unstack_from_parent(parent: Node, flip_parent: bool = true) -> void:
-	if rank:
-		print("I am " + str(self))
-		print("Rank is " + rank.nice_name)
-		print("unstack from parent pop")
-		rank.pop()
-	if parent is AceStack:
-		parent.pop()
-	if parent is Deck:
-		parent.pop_from_dealt()
-	if parent is Card:
-		if flip_parent:
-			parent.flip = Flip.FACE_UP
-			parent.enable()

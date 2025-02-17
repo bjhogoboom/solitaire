@@ -11,7 +11,10 @@ func _ready() -> void:
 
 func set_selected_card(card: Card):
 	if selected_card:
-		card.stack(selected_card)
+		var stacked = card.stack(selected_card)
+		if stacked:
+			selected_card.card_stacked.emit(selected_card)
+			selected_card.card_stacked.connect(card.on_card_stacked_from)
 		selected_card._unselect()
 		selected_card = null
 	else:
@@ -28,18 +31,24 @@ func ace_stack_selected(ace_stack: AceStack):
 		selected_card = ace_stack.top_card()
 		ace_stack.select_top_card()
 		return
-	ace_stack.stack(selected_card)
+	var stacked = ace_stack.stack(selected_card)
+	if stacked:
+		selected_card.card_stacked.emit(selected_card)
+		selected_card.card_stacked.connect(ace_stack.on_card_stacked_from)
 	unselect()
 
 
 func rank_selected(rank: Rank):
 	if !selected_card:
 		return
-	rank.stack(selected_card)
+	var stacked = rank.stack(selected_card)
+	if stacked:
+		selected_card.card_stacked.emit(selected_card)
+		selected_card.card_stacked.connect(rank.on_card_stacked_from)
 	unselect()
 
 
 func unselect():
-	if selected_card:
+	if selected_card && is_instance_valid(selected_card):
 		selected_card._unselect()
 	selected_card = null
